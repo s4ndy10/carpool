@@ -1,0 +1,50 @@
+{
+  "name": "carpool-inventory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node scripts/python.mjs -m backend --reload",
+    "dev:client": "vite --host 127.0.0.1",
+    "build": "tsc -p tsconfig.app.json && vite build",
+    "start": "node scripts/python.mjs -m backend",
+    "seed": "node scripts/python.mjs -m backend.seed",
+    "install:backend": "node scripts/python.mjs -m pip install -r backend/requirements-dev.txt",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:frontend": "vitest run",
+    "test:backend": "node scripts/python.mjs -m pytest",
+    "test:watch": "vitest",
+    "test:coverage": "node scripts/python.mjs -m pytest --cov=backend --cov-report=term-missing --cov-report=html:coverage/python --cov-report=json:coverage/python.json && vitest run --coverage",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc -p tsconfig.app.json",
+    "lint:backend": "node scripts/python.mjs -m ruff check backend",
+    "check": "npm run typecheck && npm run lint:backend && npm run test:coverage && npm run build"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.56.0",
+    "@testing-library/jest-dom": "^6.9.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.0",
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "concurrently": "^9.2.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0",
+    "vitest": "^5.0.5"
+  }
+}

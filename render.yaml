@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: carpool-api
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python -m backend
+    envVars:
+      - key: JWT_SECRET
+        sync: false
+      - key: DATABASE_PATH
+        value: ./data/forecourt.db
+      - key: PORT
+        value: 10000
+    disk:
+      name: carpool-db
+      mountPath: /data
+      sizeGB: 1
